@@ -1,0 +1,3 @@
+When we use GET method,
+and submit it , the input appears in URL
+PHP condition is on the backend side but JS condition is on Client side

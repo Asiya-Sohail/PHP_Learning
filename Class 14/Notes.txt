@@ -1,0 +1,37 @@
+Today we will study about PHP Ajax
+Ajax allows us to 
+when we submit the form tu paege will refresh 
+When we change the page 
+
+How to submit the file 
+
+Include PHP file , Define Method
+give names to all fields
+All fields are stored in Variables
+isset mean (It should not be empty ) -- Till we won't sumbit POST variable would be empty
+
+
+Normal form request directly go through the backend 
+But in AJAX page is not refreshed 
+
+Why page loads ? 
+When we click on submit all data of form is stored in POST variable (Isset mean empty na ho)
+In AJAX everything is done by JS so we need not to refresh the page 
+It will bring full data from DOM in JS 
+
+JS will redirect the response without even refreshing
+
+Here they used JQUERY
+JQUERY is the library of JS
+
+1 array is simple and 1 is associative
+In Associative array 
+it is like python dictionaries 
+it has key value pairs 
+
+
+In ajax form I defined no method because all the methods are done by JS
+Prevent Default mean don't refresh and sometimes it is written resubmission of form 
+Ocnce the form is submitted data is vanished
+
+insert_id is the id of user that is recently added

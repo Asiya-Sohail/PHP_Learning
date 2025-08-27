@@ -1,0 +1,5 @@
+CSS can be defined in three ways 
+inline, external, internal
+
+Start from the biggest screen Bootstrap 
+d-flex justify-content-center

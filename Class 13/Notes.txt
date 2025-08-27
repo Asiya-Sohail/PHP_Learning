@@ -1,0 +1,6 @@
+When we send request through API so we asume that we'll get a response either succes or fail 
+
+
+We make an API of search 
+PHP has a JS functionality Ajax 
+rebounce mean every 300 ms k bad ap query chalana 

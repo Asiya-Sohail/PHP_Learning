@@ -1,0 +1,13 @@
+Text-area --rows 
+
+checkbox --multiple selection 
+radio --only 1 selection
+
+
+In bootstrap there are fixed colors for tag 
+If we want other CSS so we'll put !important
+
+download karne ka faida ye ha k agr network nhi hoga tu bh chalega
+if we make desktop app so download thing will help 
+
+1 row can have 12 columns

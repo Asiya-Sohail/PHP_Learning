@@ -1,0 +1,2 @@
+Creating classes simplifies your work
+PDO generalizes the daabase PHP Data Object

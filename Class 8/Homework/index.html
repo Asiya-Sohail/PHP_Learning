@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard System</title>
+      <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 48px;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #dashboard-page {
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 32px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            box-shadow: 0 4px 12px rgba(245, 101, 101, 0.3);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 24px rgba(245, 101, 101, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.4);
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-nav {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 32px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-nav h1 {
+            color: white;
+            margin-bottom: 0;
+            font-size: 1.875rem;
+            background: none;
+            -webkit-text-fill-color: white;
+        }
+
+        .dashboard-nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .profile-display {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item strong {
+            color: #2d3748;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .info-item span {
+            color: #4a5568;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .message {
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            display: none;
+            font-weight: 500;
+            border: 1px solid;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            color: #22543d;
+            border-color: #9ae6b4;
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #fef5e7 0%, #fed7d7 100%);
+            color: #742a2a;
+            border-color: #fc8181;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .page {
+                padding: 32px 24px;
+                margin: 16px 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .dashboard-nav h1 {
+                font-size: 1.5rem;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="tel"],
+            textarea {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 24px 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .profile-display {
+                padding: 24px;
+            }
+
+            .info-item {
+                padding: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Focus styles for accessibility */
+        .btn:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="page active">
+            <h1>Login</h1>
+            <div id="login-message" class="message"></div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="nav-links">
+                <a onclick="showPage('register')">Don't have an account? Register</a>
+            </div>
+        </div>
+
+        <!-- Registration Page -->
+        <div id="register-page" class="page">
+            <h1>Register</h1>
+            <div id="register-message" class="message"></div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name:</label>
+                    <input type="text" id="register-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-phone">Phone:</label>
+                    <input type="tel" id="register-phone" name="phone">
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <div class="nav-links">
+                <a onclick="showPage('login')">Already have an account? Login</a>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <div class="dashboard-nav">
+                <h1>Dashboard</h1>
+                <a onclick="logout()" style="color: #ecf0f1; cursor: pointer;">Logout</a>
+            </div>
+            
+            <div id="dashboard-message" class="message"></div>
+            
+            <!-- Profile Display -->
+            <div class="profile-display">
+                <h3>Your Profile</h3>
+                <div class="profile-info" id="profile-info">
+                    <div class="info-item">
+                        <strong>Name:</strong> <span id="display-name">John Doe</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Email:</strong> <span id="display-email">john@example.com</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Phone:</strong> <span id="display-phone">+1 234 567 8900</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Address:</strong> <span id="display-address">123 Main St, City</span>
+                    </div>
+                </div>
+                <button class="btn" onclick="showEditForm()">Edit Profile</button>
+                <button class="btn btn-danger" onclick="deleteProfile()">Delete Profile</button>
+            </div>
+
+            <!-- Edit Profile Form -->
+            <div id="edit-form" style="display: none;">
+                <h3>Edit Profile</h3>
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="edit-name">Full Name:</label>
+                        <input type="text" id="edit-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email:</label>
+                        <input type="email" id="edit-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-phone">Phone:</label>
+                        <input type="tel" id="edit-phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-address">Address:</label>
+                        <textarea id="edit-address" name="address" placeholder="Enter your address"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update Profile</button>
+                    <button type="button" class="btn" onclick="cancelEdit()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy user data
+        let users = [
+            {
+                id: 1,
+                name: "John Doe",
+                email: "john@example.com",
+                password: "password123",
+                phone: "+1 234 567 8900",
+                address: "123 Main St, City"
+            }
+        ];
+
+        let currentUser = null;
+        let nextUserId = 2;
+
+        // Show specific page
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            // Clear any messages
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+        }
+
+        // Show message
+        function showMessage(elementId, message, type = 'success') {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // Login form handler
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Find user
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                loadProfile();
+                showPage('dashboard');
+                showMessage('dashboard-message', 'Welcome back!', 'success');
+            } else {
+                showMessage('login-message', 'Invalid email or password', 'error');
+            }
+        });
+
+        // Registration form handler
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const phone = document.getElementById('register-phone').value;
+            
+            // Check if email already exists
+            if (users.find(u => u.email === email)) {
+                showMessage('register-message', 'Email already exists', 'error');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: nextUserId++,
+                name: name,
+                email: email,
+                password: password,
+                phone: phone,
+                address: ""
+            };
+            
+            users.push(newUser);
+            showMessage('register-message', 'Registration successful! Please login.', 'success');
+            
+            // Reset form
+            document.getElementById('register-form').reset();
+            
+            // Redirect to login after 1 second
+            setTimeout(() => {
+                showPage('login');
+            }, 1000);
+        });
+
+        // Profile form handler
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('edit-name').value;
+            const email = document.getElementById('edit-email').value;
+            const phone = document.getElementById('edit-phone').value;
+            const address = document.getElementById('edit-address').value;
+            
+            // Check if email is taken by another user
+            const existingUser = users.find(u => u.email === email && u.id !== currentUser.id);
+            if (existingUser) {
+                showMessage('dashboard-message', 'Email already taken by another user', 'error');
+                return;
+            }
+            
+            // Update current user
+            currentUser.name = name;
+            currentUser.email = email;
+            currentUser.phone = phone;
+            currentUser.address = address;
+            
+            // Update in users array
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            users[userIndex] = currentUser;
+            
+            loadProfile();
+            cancelEdit();
+            showMessage('dashboard-message', 'Profile updated successfully!', 'success');
+        });
+
+        // Load profile data
+        function loadProfile() {
+            if (!currentUser) return;
+            
+            document.getElementById('display-name').textContent = currentUser.name;
+            document.getElementById('display-email').textContent = currentUser.email;
+            document.getElementById('display-phone').textContent = currentUser.phone || 'Not provided';
+            document.getElementById('display-address').textContent = currentUser.address || 'Not provided';
+        }
+
+        // Show edit form
+        function showEditForm() {
+            document.getElementById('edit-name').value = currentUser.name;
+            document.getElementById('edit-email').value = currentUser.email;
+            document.getElementById('edit-phone').value = currentUser.phone || '';
+            document.getElementById('edit-address').value = currentUser.address || '';
+            
+            document.getElementById('edit-form').style.display = 'block';
+            document.querySelector('.profile-display').style.display = 'none';
+        }
+
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById('edit-form').style.display = 'none';
+            document.querySelector('.profile-display').style.display = 'block';
+        }
+
+        // Delete profile
+        function deleteProfile() {
+            if (confirm('Are you sure you want to delete your profile? This action cannot be undone.')) {
+                // Remove user from array
+                users = users.filter(u => u.id !== currentUser.id);
+                
+                // Show success message and logout
+                showMessage('dashboard-message', 'Profile deleted successfully!', 'success');
+                
+                setTimeout(() => {
+                    logout();
+                }, 1500);
+            }
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            showPage('login');
+            
+            // Clear forms
+            document.getElementById('login-form').reset();
+            document.getElementById('register-form').reset();
+            document.getElementById('profile-form').reset();
+            
+            // Hide edit form if visible
+            cancelEdit();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('login');
+        });
+    </script>
+</body>
+</html>

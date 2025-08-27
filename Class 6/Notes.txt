@@ -1,0 +1,16 @@
+php basic syntax <?php ?>
+
+for printing 
+echo "Hello"
+
+for php in html 
+put tag <?php   
+//write php code here
+
+?>
+
+String can be in single and double code 
+
+String concatenation is through . sign
+
+PHP identifies input field of form through name not id or class or type

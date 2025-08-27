@@ -1,0 +1,5 @@
+We can do frontend development in JS also mobile development
+Frontend Framework React, Angular, Veu JS
+Backend Nodejs
+Mostly Database (No SQL used with JS)
+Application development React Native

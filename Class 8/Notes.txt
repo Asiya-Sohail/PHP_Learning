@@ -1,0 +1,6 @@
+Whatever we make variables they have a relation in between 
+Everything has a specific id , so it makes easy for handling data
+Normalization to break down tables
+
+username like 'a___';
+It will have underscores of how many letters in the name
